@@ -1,8 +1,8 @@
 /* eslint-disable prettier/prettier */
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Todo } from './toDo.entity';
-import { Repository } from 'typeorm';
+import { FindOneOptions, Repository } from 'typeorm';
 
 @Injectable()
 export class TodoService {
@@ -21,5 +21,24 @@ export class TodoService {
     todo.noteContent = noteContent
     await this.todoRepository.save(todo)
     return todo
+  }
+
+  async update(id: string, title: string, noteContent: string): Promise<Todo> {
+    const options: FindOneOptions<Todo> = { where: { id } }
+    const todo = await this.todoRepository.findOne(options)
+    if (!todo) {
+      throw new NotFoundException('Tarefa não encontrada')
+    }
+    todo.title = title
+    todo.noteContent = noteContent
+    await this.todoRepository.save(todo)
+    return todo
+  }
+
+  async remove(id: string): Promise<void> {
+    const result = await this.todoRepository.delete(id)
+    if (result.affected === 0) {
+      throw new NotFoundException('Tarefa não encontrada')
+    }
   }
 }
