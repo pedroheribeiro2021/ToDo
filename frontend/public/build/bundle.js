@@ -425,102 +425,69 @@ var app = (function () {
 
     function get_each_context(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[13] = list[i];
-    	child_ctx[14] = list;
-    	child_ctx[15] = i;
+    	child_ctx[17] = list[i];
+    	child_ctx[18] = list;
+    	child_ctx[19] = i;
     	return child_ctx;
     }
 
-    // (128:2) {#each todos as todo}
-    function create_each_block(ctx) {
-    	let li;
+    // (142:8) {:else}
+    function create_else_block(ctx) {
     	let h3;
-    	let t0_value = /*todo*/ ctx[13].title + "";
+    	let t0_value = /*todo*/ ctx[17].title + "";
     	let t0;
     	let t1;
-    	let textarea0;
-    	let t2;
     	let p;
-    	let t3_value = /*todo*/ ctx[13].noteContent + "";
+    	let t2_value = /*todo*/ ctx[17].noteContent + "";
+    	let t2;
     	let t3;
-    	let t4;
-    	let textarea1;
-    	let t5;
     	let button0;
-    	let t7;
+    	let t5;
     	let button1;
-    	let t9;
     	let mounted;
     	let dispose;
 
-    	function textarea0_input_handler() {
-    		/*textarea0_input_handler*/ ctx[8].call(textarea0, /*each_value*/ ctx[14], /*todo_index*/ ctx[15]);
-    	}
-
-    	function textarea1_input_handler() {
-    		/*textarea1_input_handler*/ ctx[9].call(textarea1, /*each_value*/ ctx[14], /*todo_index*/ ctx[15]);
-    	}
-
-    	function click_handler() {
-    		return /*click_handler*/ ctx[10](/*todo*/ ctx[13]);
-    	}
-
     	function click_handler_1() {
-    		return /*click_handler_1*/ ctx[11](/*todo*/ ctx[13]);
+    		return /*click_handler_1*/ ctx[14](/*todo*/ ctx[17]);
+    	}
+
+    	function click_handler_2() {
+    		return /*click_handler_2*/ ctx[15](/*todo*/ ctx[17]);
     	}
 
     	const block = {
     		c: function create() {
-    			li = element("li");
     			h3 = element("h3");
     			t0 = text(t0_value);
     			t1 = space();
-    			textarea0 = element("textarea");
-    			t2 = space();
     			p = element("p");
-    			t3 = text(t3_value);
-    			t4 = space();
-    			textarea1 = element("textarea");
-    			t5 = space();
+    			t2 = text(t2_value);
+    			t3 = space();
     			button0 = element("button");
-    			button0.textContent = "Atualizar";
-    			t7 = space();
+    			button0.textContent = "Editar";
+    			t5 = space();
     			button1 = element("button");
     			button1.textContent = "Excluir";
-    			t9 = space();
-    			add_location(h3, file, 129, 6, 3168);
-    			add_location(textarea0, file, 130, 6, 3197);
-    			add_location(p, file, 131, 6, 3250);
-    			add_location(textarea1, file, 132, 6, 3283);
-    			add_location(button0, file, 133, 6, 3342);
-    			add_location(button1, file, 134, 6, 3443);
-    			add_location(li, file, 128, 4, 3156);
+    			add_location(h3, file, 142, 10, 3828);
+    			add_location(p, file, 143, 10, 3861);
+    			add_location(button0, file, 144, 10, 3898);
+    			add_location(button1, file, 145, 10, 3972);
     		},
     		m: function mount(target, anchor) {
-    			insert_dev(target, li, anchor);
-    			append_dev(li, h3);
+    			insert_dev(target, h3, anchor);
     			append_dev(h3, t0);
-    			append_dev(li, t1);
-    			append_dev(li, textarea0);
-    			set_input_value(textarea0, /*todo*/ ctx[13].title);
-    			append_dev(li, t2);
-    			append_dev(li, p);
-    			append_dev(p, t3);
-    			append_dev(li, t4);
-    			append_dev(li, textarea1);
-    			set_input_value(textarea1, /*todo*/ ctx[13].noteContent);
-    			append_dev(li, t5);
-    			append_dev(li, button0);
-    			append_dev(li, t7);
-    			append_dev(li, button1);
-    			append_dev(li, t9);
+    			insert_dev(target, t1, anchor);
+    			insert_dev(target, p, anchor);
+    			append_dev(p, t2);
+    			insert_dev(target, t3, anchor);
+    			insert_dev(target, button0, anchor);
+    			insert_dev(target, t5, anchor);
+    			insert_dev(target, button1, anchor);
 
     			if (!mounted) {
     				dispose = [
-    					listen_dev(textarea0, "input", textarea0_input_handler),
-    					listen_dev(textarea1, "input", textarea1_input_handler),
-    					listen_dev(button0, "click", click_handler, false, false, false, false),
-    					listen_dev(button1, "click", click_handler_1, false, false, false, false)
+    					listen_dev(button0, "click", click_handler_1, false, false, false, false),
+    					listen_dev(button1, "click", click_handler_2, false, false, false, false)
     				];
 
     				mounted = true;
@@ -528,20 +495,17 @@ var app = (function () {
     		},
     		p: function update(new_ctx, dirty) {
     			ctx = new_ctx;
-    			if (dirty & /*todos*/ 1 && t0_value !== (t0_value = /*todo*/ ctx[13].title + "")) set_data_dev(t0, t0_value);
-
-    			if (dirty & /*todos*/ 1) {
-    				set_input_value(textarea0, /*todo*/ ctx[13].title);
-    			}
-
-    			if (dirty & /*todos*/ 1 && t3_value !== (t3_value = /*todo*/ ctx[13].noteContent + "")) set_data_dev(t3, t3_value);
-
-    			if (dirty & /*todos*/ 1) {
-    				set_input_value(textarea1, /*todo*/ ctx[13].noteContent);
-    			}
+    			if (dirty & /*todos*/ 1 && t0_value !== (t0_value = /*todo*/ ctx[17].title + "")) set_data_dev(t0, t0_value);
+    			if (dirty & /*todos*/ 1 && t2_value !== (t2_value = /*todo*/ ctx[17].noteContent + "")) set_data_dev(t2, t2_value);
     		},
     		d: function destroy(detaching) {
-    			if (detaching) detach_dev(li);
+    			if (detaching) detach_dev(h3);
+    			if (detaching) detach_dev(t1);
+    			if (detaching) detach_dev(p);
+    			if (detaching) detach_dev(t3);
+    			if (detaching) detach_dev(button0);
+    			if (detaching) detach_dev(t5);
+    			if (detaching) detach_dev(button1);
     			mounted = false;
     			run_all(dispose);
     		}
@@ -549,9 +513,174 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
+    		id: create_else_block.name,
+    		type: "else",
+    		source: "(142:8) {:else}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (126:8) {#if editing}
+    function create_if_block(ctx) {
+    	let form;
+    	let label0;
+    	let t0;
+    	let textarea0;
+    	let t1;
+    	let label1;
+    	let t2;
+    	let textarea1;
+    	let t3;
+    	let button0;
+    	let t5;
+    	let button1;
+    	let mounted;
+    	let dispose;
+
+    	function textarea0_input_handler() {
+    		/*textarea0_input_handler*/ ctx[11].call(textarea0, /*each_value*/ ctx[18], /*todo_index*/ ctx[19]);
+    	}
+
+    	function textarea1_input_handler() {
+    		/*textarea1_input_handler*/ ctx[12].call(textarea1, /*each_value*/ ctx[18], /*todo_index*/ ctx[19]);
+    	}
+
+    	function click_handler() {
+    		return /*click_handler*/ ctx[13](/*todo*/ ctx[17]);
+    	}
+
+    	const block = {
+    		c: function create() {
+    			form = element("form");
+    			label0 = element("label");
+    			t0 = text("Título:\r\n              \r\n              ");
+    			textarea0 = element("textarea");
+    			t1 = space();
+    			label1 = element("label");
+    			t2 = text("Conteúdo da Tarefa:\r\n              \r\n              ");
+    			textarea1 = element("textarea");
+    			t3 = space();
+    			button0 = element("button");
+    			button0.textContent = "Atualizar";
+    			t5 = space();
+    			button1 = element("button");
+    			button1.textContent = "Cancelar";
+    			add_location(textarea0, file, 130, 14, 3252);
+    			add_location(label0, file, 127, 12, 3141);
+    			add_location(textarea1, file, 135, 14, 3462);
+    			add_location(label1, file, 132, 12, 3333);
+    			add_location(button0, file, 138, 12, 3609);
+    			attr_dev(button1, "type", "button");
+    			add_location(button1, file, 139, 12, 3716);
+    			add_location(form, file, 126, 10, 3121);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, form, anchor);
+    			append_dev(form, label0);
+    			append_dev(label0, t0);
+    			append_dev(label0, textarea0);
+    			set_input_value(textarea0, /*todo*/ ctx[17].title);
+    			append_dev(form, t1);
+    			append_dev(form, label1);
+    			append_dev(label1, t2);
+    			append_dev(label1, textarea1);
+    			set_input_value(textarea1, /*todo*/ ctx[17].noteContent);
+    			append_dev(form, t3);
+    			append_dev(form, button0);
+    			append_dev(form, t5);
+    			append_dev(form, button1);
+
+    			if (!mounted) {
+    				dispose = [
+    					listen_dev(textarea0, "input", textarea0_input_handler),
+    					listen_dev(textarea1, "input", textarea1_input_handler),
+    					listen_dev(button0, "click", click_handler, false, false, false, false),
+    					listen_dev(button1, "click", /*cancelEditing*/ ctx[8], false, false, false, false)
+    				];
+
+    				mounted = true;
+    			}
+    		},
+    		p: function update(new_ctx, dirty) {
+    			ctx = new_ctx;
+
+    			if (dirty & /*todos*/ 1) {
+    				set_input_value(textarea0, /*todo*/ ctx[17].title);
+    			}
+
+    			if (dirty & /*todos*/ 1) {
+    				set_input_value(textarea1, /*todo*/ ctx[17].noteContent);
+    			}
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(form);
+    			mounted = false;
+    			run_all(dispose);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block.name,
+    		type: "if",
+    		source: "(126:8) {#if editing}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (124:4) {#each todos as todo}
+    function create_each_block(ctx) {
+    	let li;
+    	let t;
+
+    	function select_block_type(ctx, dirty) {
+    		if (/*editing*/ ctx[3]) return create_if_block;
+    		return create_else_block;
+    	}
+
+    	let current_block_type = select_block_type(ctx);
+    	let if_block = current_block_type(ctx);
+
+    	const block = {
+    		c: function create() {
+    			li = element("li");
+    			if_block.c();
+    			t = space();
+    			add_location(li, file, 124, 6, 3082);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, li, anchor);
+    			if_block.m(li, null);
+    			append_dev(li, t);
+    		},
+    		p: function update(ctx, dirty) {
+    			if (current_block_type === (current_block_type = select_block_type(ctx)) && if_block) {
+    				if_block.p(ctx, dirty);
+    			} else {
+    				if_block.d(1);
+    				if_block = current_block_type(ctx);
+
+    				if (if_block) {
+    					if_block.c();
+    					if_block.m(li, t);
+    				}
+    			}
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(li);
+    			if_block.d();
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(128:2) {#each todos as todo}",
+    		source: "(124:4) {#each todos as todo}",
     		ctx
     	});
 
@@ -606,16 +735,16 @@ var app = (function () {
     				each_blocks[i].c();
     			}
 
-    			add_location(h1, file, 100, 2, 2444);
+    			add_location(h1, file, 105, 2, 2562);
     			attr_dev(input, "type", "text");
-    			add_location(input, file, 107, 3, 2652);
-    			add_location(label0, file, 104, 1, 2573);
-    			add_location(textarea, file, 111, 3, 2742);
-    			add_location(label1, file, 109, 1, 2706);
+    			add_location(input, file, 112, 3, 2770);
+    			add_location(label0, file, 109, 1, 2691);
+    			add_location(textarea, file, 116, 3, 2860);
+    			add_location(label1, file, 114, 1, 2824);
     			attr_dev(button, "type", "submit");
-    			add_location(button, file, 114, 1, 2865);
-    			add_location(form, file, 103, 2, 2524);
-    			add_location(ul, file, 126, 0, 3121);
+    			add_location(button, file, 119, 1, 2983);
+    			add_location(form, file, 108, 2, 2642);
+    			add_location(ul, file, 122, 2, 3043);
     		},
     		l: function claim(nodes) {
     			throw new Error_1("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -646,9 +775,9 @@ var app = (function () {
 
     			if (!mounted) {
     				dispose = [
-    					listen_dev(input, "input", /*input_input_handler*/ ctx[6]),
-    					listen_dev(textarea, "input", /*textarea_input_handler*/ ctx[7]),
-    					listen_dev(form, "submit", prevent_default(/*handleSubmit*/ ctx[3]), false, true, false, false)
+    					listen_dev(input, "input", /*input_input_handler*/ ctx[9]),
+    					listen_dev(textarea, "input", /*textarea_input_handler*/ ctx[10]),
+    					listen_dev(form, "submit", prevent_default(/*handleSubmit*/ ctx[4]), false, true, false, false)
     				];
 
     				mounted = true;
@@ -663,7 +792,7 @@ var app = (function () {
     				set_input_value(textarea, /*noteContent*/ ctx[2]);
     			}
 
-    			if (dirty & /*deleteTodo, todos, updateNote*/ 49) {
+    			if (dirty & /*cancelEditing, updateNote, todos, editing, deleteTodo, startEditing*/ 489) {
     				each_value = /*todos*/ ctx[0];
     				validate_each_argument(each_value);
     				let i;
@@ -718,6 +847,7 @@ var app = (function () {
     	let todos = [];
     	let title = '';
     	let noteContent = '';
+    	let editing = false;
 
     	async function handleSubmit() {
     		const data = { title, noteContent };
@@ -802,6 +932,8 @@ var app = (function () {
     		} // Trate o erro de acordo com a sua necessidade
     	};
 
+    	const startEditing = () => $$invalidate(3, editing = true);
+    	const cancelEditing = () => $$invalidate(3, editing = false);
     	fetchTodos();
     	const writable_props = [];
 
@@ -830,22 +962,27 @@ var app = (function () {
     	}
 
     	const click_handler = todo => updateNote(todo.id, todo.title, todo.noteContent);
-    	const click_handler_1 = todo => deleteTodo(todo.id);
+    	const click_handler_1 = todo => startEditing(todo.id);
+    	const click_handler_2 = todo => deleteTodo(todo.id);
 
     	$$self.$capture_state = () => ({
     		todos,
     		title,
     		noteContent,
+    		editing,
     		handleSubmit,
     		fetchTodos,
     		deleteTodo,
-    		updateNote
+    		updateNote,
+    		startEditing,
+    		cancelEditing
     	});
 
     	$$self.$inject_state = $$props => {
     		if ('todos' in $$props) $$invalidate(0, todos = $$props.todos);
     		if ('title' in $$props) $$invalidate(1, title = $$props.title);
     		if ('noteContent' in $$props) $$invalidate(2, noteContent = $$props.noteContent);
+    		if ('editing' in $$props) $$invalidate(3, editing = $$props.editing);
     	};
 
     	if ($$props && "$$inject" in $$props) {
@@ -856,15 +993,19 @@ var app = (function () {
     		todos,
     		title,
     		noteContent,
+    		editing,
     		handleSubmit,
     		deleteTodo,
     		updateNote,
+    		startEditing,
+    		cancelEditing,
     		input_input_handler,
     		textarea_input_handler,
     		textarea0_input_handler,
     		textarea1_input_handler,
     		click_handler,
-    		click_handler_1
+    		click_handler_1,
+    		click_handler_2
     	];
     }
 

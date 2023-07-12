@@ -1,7 +1,8 @@
 <script>
 	let todos = [];
 	let title = '';
-  	let noteContent = '';
+  let noteContent = '';
+  let editing = false
 
 	async function handleSubmit() {
     const data = {
@@ -94,6 +95,10 @@
     }
   };
 
+  const startEditing = () => editing = true
+  const cancelEditing = () => editing = false
+
+
 	fetchTodos();
 
   </script>
@@ -115,24 +120,31 @@
 	<button type="submit">Criar Tarefa</button>
   </form>
 
-  <!-- <ul>
-	{#each todos as todo}
-	  <li>
-		<h3>{todo.title}</h3>
-		<p>{todo.noteContent}</p>
-		<button on:click={() => deleteTodo(todo.id)}>Excluir</button>
-	  </li>
-	{/each}
-  </ul> -->
-<ul>
-  {#each todos as todo}
-    <li>
-      <h3>{todo.title}</h3>
-      <textarea bind:value={todo.title}></textarea>
-      <p>{todo.noteContent}</p>
-      <textarea bind:value={todo.noteContent}></textarea>
-      <button on:click={() => updateNote(todo.id, todo.title, todo.noteContent)}>Atualizar</button>
-      <button on:click={() => deleteTodo(todo.id)}>Excluir</button>
-    </li>
-  {/each}
-</ul>
+  <ul>
+    {#each todos as todo}
+      <li>
+        {#if editing}
+          <form>
+            <label>
+              Título:
+              <!-- <input type="text" bind:value={title} /> -->
+              <textarea bind:value={todo.title}></textarea>
+            </label>
+            <label>
+              Conteúdo da Tarefa:
+              <!-- <textarea bind:value={noteContent}></textarea> -->
+              <textarea bind:value={todo.noteContent}></textarea>
+            </label>
+            <!-- <button type="submit">Enviar</button> -->
+            <button on:click={() => updateNote(todo.id, todo.title, todo.noteContent)}>Atualizar</button>
+            <button type="button" on:click={cancelEditing}>Cancelar</button>
+          </form>
+        {:else}
+          <h3>{todo.title}</h3>
+          <p>{todo.noteContent}</p>
+          <button on:click={() => startEditing(todo.id)}>Editar</button>
+          <button on:click={() => deleteTodo(todo.id)}>Excluir</button>
+        {/if}
+      </li>
+    {/each}
+  </ul>
