@@ -1,13 +1,14 @@
 <script>
-	let todos = [];
-	let title = '';
+  let todos = [];
+  let title = '';
   let noteContent = '';
-  let editing = false
+  let editingTodo = null;
 
-	async function handleSubmit() {
+  async function handleSubmit() {
     const data = {
       title,
-      noteContent
+      noteContent,
+      completed: false
     };
 
     try {
@@ -19,54 +20,60 @@
         body: JSON.stringify(data)
       });
 
-	  if (!response.ok) {
+      if (!response.ok) {
         throw new Error('Erro ao criar tarefa');
       }
 
       const createdTodo = await response.json();
       console.log('Tarefa criada:', createdTodo);
       todos = [...todos, createdTodo];
+      resetForm();
     } catch (error) {
       console.error('Erro:', error.message);
       // Trate o erro de acordo com a sua necessidade
     }
   }
-  
-	const fetchTodos = async () => {
-	  try {
-		const response = await fetch('http://localhost:3003/todos');
-		if (!response.ok) {
-		  throw new Error('Erro ao buscar as tarefas');
-		}
-		todos = await response.json();
-	  } catch (error) {
-		console.error('Erro:', error.message);
-	  }
-	};
-  
-	const deleteTodo = async (id) => {
-	  try {
-		const response = await fetch(`http://localhost:3003/todos/${id}`, {
-		  method: 'DELETE',
-		});
-  
-		if (!response.ok) {
-		  throw new Error('Erro ao excluir tarefa');
-		}
-  
-		todos = todos.filter(todo => todo.id !== id);
-		console.log('Tarefa excluída:', id);
-	  } catch (error) {
-		console.error('Erro:', error.message);
-		// Trate o erro de acordo com a sua necessidade
-	  }
-	};
 
-	const updateNote = async (id, newTitle, newNoteContent) => {
+  const resetForm = () => {
+    title = '';
+    noteContent = '';
+  };
+
+  const fetchTodos = async () => {
+    try {
+      const response = await fetch('http://localhost:3003/todos');
+      if (!response.ok) {
+        throw new Error('Erro ao buscar as tarefas');
+      }
+      todos = await response.json();
+    } catch (error) {
+      console.error('Erro:', error.message);
+    }
+  };
+
+  const deleteTodo = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:3003/todos/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (!response.ok) {
+        throw new Error('Erro ao excluir tarefa');
+      }
+
+      todos = todos.filter(todo => todo.id !== id);
+      console.log('Tarefa excluída:', id);
+    } catch (error) {
+      console.error('Erro:', error.message);
+      // Trate o erro de acordo com a sua necessidade
+    }
+  };
+
+  const updateNote = async (id, newTitle, newNoteContent) => {
     try {
       const data = {
         title: newTitle,
-        noteContent: newNoteContent
+        noteContent: newNoteContent,
       };
 
       const response = await fetch(`http://localhost:3003/todos/${id}`, {
@@ -89,62 +96,103 @@
         }
         return todo;
       });
+      cancelEditing();
     } catch (error) {
       console.error('Erro:', error.message);
       // Trate o erro de acordo com a sua necessidade
     }
   };
 
-  const startEditing = () => editing = true
-  const cancelEditing = () => editing = false
+  const toggleCompletion = async (id, completed) => {
+    try {
+      const data = { completed };
 
+      const response = await fetch(`http://localhost:3003/todos/${id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
 
-	fetchTodos();
+      if (!response.ok) {
+        throw new Error('Erro ao atualizar o status da tarefa');
+      }
 
-  </script>
-  
+      const updatedTodo = await response.json();
+      console.log('Tarefa atualizada:', updatedTodo);
+      todos = todos.map(todo => {
+        if (todo.id === updatedTodo.id) {
+          return updatedTodo;
+        }
+        return todo;
+      });
+    } catch (error) {
+      console.error('Erro:', error.message);
+    }
+  };
+
+  const startEditing = (id) => {
+    editingTodo = todos.find(todo => todo.id === id);
+  };
+
+  const cancelEditing = () => {
+    editingTodo = null;
+  };
+
+  fetchTodos();
+</script>
+
+<style>
+  .completed {
+    text-decoration: line-through;
+    color: gray;
+  }
+</style>
+
+<main>
   <h1>Lista de Tarefas</h1>
-  
+
   <!-- Formulário para criação de tarefas -->
   <form on:submit|preventDefault={handleSubmit}>
-	<label>
-	  Título:
-	  <!-- <input type="text" name="title" required> -->
-	  <input type="text" bind:value={title} />
-	</label>
-	<label>
-	  Conteúdo da Tarefa:
-	  <textarea bind:value={noteContent}></textarea>
-	  <!-- <textarea name="noteContent" required></textarea> -->
-	</label>
-	<button type="submit">Criar Tarefa</button>
+    <label>
+      Título:
+      <input type="text" bind:value={title} />
+    </label>
+    <label>
+      Conteúdo da Tarefa:
+      <textarea bind:value={noteContent}></textarea>
+    </label>
+    <button type="submit">Criar Tarefa</button>
   </form>
 
   <ul>
     {#each todos as todo}
       <li>
-        {#if editing}
-          <form>
+        {#if editingTodo && editingTodo.id === todo.id}
+          <form on:submit|preventDefault={() => updateNote(todo.id, editingTodo.title, editingTodo.noteContent)}>
             <label>
               Título:
-              <!-- <input type="text" bind:value={title} /> -->
-              <textarea bind:value={todo.title}></textarea>
+              <textarea bind:value={editingTodo.title}></textarea>
             </label>
             <label>
               Conteúdo da Tarefa:
-              <!-- <textarea bind:value={noteContent}></textarea> -->
-              <textarea bind:value={todo.noteContent}></textarea>
+              <textarea bind:value={editingTodo.noteContent}></textarea>
             </label>
-            <!-- <button type="submit">Enviar</button> -->
-            <button on:click={() => updateNote(todo.id, todo.title, todo.noteContent)}>Atualizar</button>
+            <button type="submit">Atualizar</button>
             <button type="button" on:click={cancelEditing}>Cancelar</button>
           </form>
         {:else}
-          <h3>{todo.title}</h3>
-          <p>{todo.noteContent}</p>
+          <div>
+            <input type="checkbox" checked={todo.completed} on:change={() => toggleCompletion(todo.id, !todo.completed)} />
+            <label for="completed">Concluído</label>
+          </div>
+          <h3 class:completed={todo.completed}>{todo.title}</h3>
+          <p class:completed={todo.completed}>{todo.noteContent}</p>
           <button on:click={() => startEditing(todo.id)}>Editar</button>
           <button on:click={() => deleteTodo(todo.id)}>Excluir</button>
         {/if}
       </li>
     {/each}
   </ul>
+</main>

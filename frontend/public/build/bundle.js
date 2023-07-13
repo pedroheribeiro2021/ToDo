@@ -82,6 +82,9 @@ var app = (function () {
     function set_input_value(input, value) {
         input.value = value == null ? '' : value;
     }
+    function toggle_class(element, name, toggle) {
+        element.classList[toggle ? 'add' : 'remove'](name);
+    }
     function custom_event(type, detail, { bubbles = false, cancelable = false } = {}) {
         const e = document.createEvent('CustomEvent');
         e.initCustomEvent(type, bubbles, cancelable, detail);
@@ -375,6 +378,10 @@ var app = (function () {
         else
             dispatch_dev('SvelteDOMSetAttribute', { node, attribute, value });
     }
+    function prop_dev(node, property, value) {
+        node[property] = value;
+        dispatch_dev('SvelteDOMSetProperty', { node, property, value });
+    }
     function set_data_dev(text, data) {
         data = '' + data;
         if (text.data === data)
@@ -425,69 +432,99 @@ var app = (function () {
 
     function get_each_context(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[17] = list[i];
-    	child_ctx[18] = list;
-    	child_ctx[19] = i;
+    	child_ctx[20] = list[i];
     	return child_ctx;
     }
 
-    // (142:8) {:else}
+    // (185:8) {:else}
     function create_else_block(ctx) {
-    	let h3;
-    	let t0_value = /*todo*/ ctx[17].title + "";
+    	let div;
+    	let input;
+    	let input_checked_value;
     	let t0;
-    	let t1;
-    	let p;
-    	let t2_value = /*todo*/ ctx[17].noteContent + "";
+    	let label;
     	let t2;
+    	let h3;
+    	let t3_value = /*todo*/ ctx[20].title + "";
     	let t3;
-    	let button0;
+    	let t4;
+    	let p;
+    	let t5_value = /*todo*/ ctx[20].noteContent + "";
     	let t5;
+    	let t6;
+    	let button0;
+    	let t8;
     	let button1;
     	let mounted;
     	let dispose;
 
-    	function click_handler_1() {
-    		return /*click_handler_1*/ ctx[14](/*todo*/ ctx[17]);
+    	function change_handler() {
+    		return /*change_handler*/ ctx[15](/*todo*/ ctx[20]);
     	}
 
-    	function click_handler_2() {
-    		return /*click_handler_2*/ ctx[15](/*todo*/ ctx[17]);
+    	function click_handler() {
+    		return /*click_handler*/ ctx[16](/*todo*/ ctx[20]);
+    	}
+
+    	function click_handler_1() {
+    		return /*click_handler_1*/ ctx[17](/*todo*/ ctx[20]);
     	}
 
     	const block = {
     		c: function create() {
+    			div = element("div");
+    			input = element("input");
+    			t0 = space();
+    			label = element("label");
+    			label.textContent = "Concluído";
+    			t2 = space();
     			h3 = element("h3");
-    			t0 = text(t0_value);
-    			t1 = space();
+    			t3 = text(t3_value);
+    			t4 = space();
     			p = element("p");
-    			t2 = text(t2_value);
-    			t3 = space();
+    			t5 = text(t5_value);
+    			t6 = space();
     			button0 = element("button");
     			button0.textContent = "Editar";
-    			t5 = space();
+    			t8 = space();
     			button1 = element("button");
     			button1.textContent = "Excluir";
-    			add_location(h3, file, 142, 10, 3828);
-    			add_location(p, file, 143, 10, 3861);
-    			add_location(button0, file, 144, 10, 3898);
-    			add_location(button1, file, 145, 10, 3972);
+    			attr_dev(input, "type", "checkbox");
+    			input.checked = input_checked_value = /*todo*/ ctx[20].completed;
+    			add_location(input, file, 186, 12, 4817);
+    			attr_dev(label, "for", "completed");
+    			add_location(label, file, 187, 12, 4942);
+    			add_location(div, file, 185, 10, 4798);
+    			attr_dev(h3, "class", "svelte-1551dgk");
+    			toggle_class(h3, "completed", /*todo*/ ctx[20].completed);
+    			add_location(h3, file, 189, 10, 5012);
+    			attr_dev(p, "class", "svelte-1551dgk");
+    			toggle_class(p, "completed", /*todo*/ ctx[20].completed);
+    			add_location(p, file, 190, 10, 5078);
+    			add_location(button0, file, 191, 10, 5148);
+    			add_location(button1, file, 192, 10, 5222);
     		},
     		m: function mount(target, anchor) {
+    			insert_dev(target, div, anchor);
+    			append_dev(div, input);
+    			append_dev(div, t0);
+    			append_dev(div, label);
+    			insert_dev(target, t2, anchor);
     			insert_dev(target, h3, anchor);
-    			append_dev(h3, t0);
-    			insert_dev(target, t1, anchor);
+    			append_dev(h3, t3);
+    			insert_dev(target, t4, anchor);
     			insert_dev(target, p, anchor);
-    			append_dev(p, t2);
-    			insert_dev(target, t3, anchor);
+    			append_dev(p, t5);
+    			insert_dev(target, t6, anchor);
     			insert_dev(target, button0, anchor);
-    			insert_dev(target, t5, anchor);
+    			insert_dev(target, t8, anchor);
     			insert_dev(target, button1, anchor);
 
     			if (!mounted) {
     				dispose = [
-    					listen_dev(button0, "click", click_handler_1, false, false, false, false),
-    					listen_dev(button1, "click", click_handler_2, false, false, false, false)
+    					listen_dev(input, "change", change_handler, false, false, false, false),
+    					listen_dev(button0, "click", click_handler, false, false, false, false),
+    					listen_dev(button1, "click", click_handler_1, false, false, false, false)
     				];
 
     				mounted = true;
@@ -495,16 +532,32 @@ var app = (function () {
     		},
     		p: function update(new_ctx, dirty) {
     			ctx = new_ctx;
-    			if (dirty & /*todos*/ 1 && t0_value !== (t0_value = /*todo*/ ctx[17].title + "")) set_data_dev(t0, t0_value);
-    			if (dirty & /*todos*/ 1 && t2_value !== (t2_value = /*todo*/ ctx[17].noteContent + "")) set_data_dev(t2, t2_value);
+
+    			if (dirty & /*todos*/ 1 && input_checked_value !== (input_checked_value = /*todo*/ ctx[20].completed)) {
+    				prop_dev(input, "checked", input_checked_value);
+    			}
+
+    			if (dirty & /*todos*/ 1 && t3_value !== (t3_value = /*todo*/ ctx[20].title + "")) set_data_dev(t3, t3_value);
+
+    			if (dirty & /*todos*/ 1) {
+    				toggle_class(h3, "completed", /*todo*/ ctx[20].completed);
+    			}
+
+    			if (dirty & /*todos*/ 1 && t5_value !== (t5_value = /*todo*/ ctx[20].noteContent + "")) set_data_dev(t5, t5_value);
+
+    			if (dirty & /*todos*/ 1) {
+    				toggle_class(p, "completed", /*todo*/ ctx[20].completed);
+    			}
     		},
     		d: function destroy(detaching) {
+    			if (detaching) detach_dev(div);
+    			if (detaching) detach_dev(t2);
     			if (detaching) detach_dev(h3);
-    			if (detaching) detach_dev(t1);
+    			if (detaching) detach_dev(t4);
     			if (detaching) detach_dev(p);
-    			if (detaching) detach_dev(t3);
+    			if (detaching) detach_dev(t6);
     			if (detaching) detach_dev(button0);
-    			if (detaching) detach_dev(t5);
+    			if (detaching) detach_dev(t8);
     			if (detaching) detach_dev(button1);
     			mounted = false;
     			run_all(dispose);
@@ -515,14 +568,14 @@ var app = (function () {
     		block,
     		id: create_else_block.name,
     		type: "else",
-    		source: "(142:8) {:else}",
+    		source: "(185:8) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (126:8) {#if editing}
+    // (172:8) {#if editingTodo && editingTodo.id === todo.id}
     function create_if_block(ctx) {
     	let form;
     	let label0;
@@ -539,27 +592,19 @@ var app = (function () {
     	let mounted;
     	let dispose;
 
-    	function textarea0_input_handler() {
-    		/*textarea0_input_handler*/ ctx[11].call(textarea0, /*each_value*/ ctx[18], /*todo_index*/ ctx[19]);
-    	}
-
-    	function textarea1_input_handler() {
-    		/*textarea1_input_handler*/ ctx[12].call(textarea1, /*each_value*/ ctx[18], /*todo_index*/ ctx[19]);
-    	}
-
-    	function click_handler() {
-    		return /*click_handler*/ ctx[13](/*todo*/ ctx[17]);
+    	function submit_handler() {
+    		return /*submit_handler*/ ctx[14](/*todo*/ ctx[20]);
     	}
 
     	const block = {
     		c: function create() {
     			form = element("form");
     			label0 = element("label");
-    			t0 = text("Título:\r\n              \r\n              ");
+    			t0 = text("Título:\r\n              ");
     			textarea0 = element("textarea");
     			t1 = space();
     			label1 = element("label");
-    			t2 = text("Conteúdo da Tarefa:\r\n              \r\n              ");
+    			t2 = text("Conteúdo da Tarefa:\r\n              ");
     			textarea1 = element("textarea");
     			t3 = space();
     			button0 = element("button");
@@ -567,26 +612,27 @@ var app = (function () {
     			t5 = space();
     			button1 = element("button");
     			button1.textContent = "Cancelar";
-    			add_location(textarea0, file, 130, 14, 3252);
-    			add_location(label0, file, 127, 12, 3141);
-    			add_location(textarea1, file, 135, 14, 3462);
-    			add_location(label1, file, 132, 12, 3333);
-    			add_location(button0, file, 138, 12, 3609);
+    			add_location(textarea0, file, 175, 14, 4392);
+    			add_location(label0, file, 173, 12, 4346);
+    			add_location(textarea1, file, 179, 14, 4538);
+    			add_location(label1, file, 177, 12, 4480);
+    			attr_dev(button0, "type", "submit");
+    			add_location(button0, file, 181, 12, 4632);
     			attr_dev(button1, "type", "button");
-    			add_location(button1, file, 139, 12, 3716);
-    			add_location(form, file, 126, 10, 3121);
+    			add_location(button1, file, 182, 12, 4686);
+    			add_location(form, file, 172, 10, 4229);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, form, anchor);
     			append_dev(form, label0);
     			append_dev(label0, t0);
     			append_dev(label0, textarea0);
-    			set_input_value(textarea0, /*todo*/ ctx[17].title);
+    			set_input_value(textarea0, /*editingTodo*/ ctx[3].title);
     			append_dev(form, t1);
     			append_dev(form, label1);
     			append_dev(label1, t2);
     			append_dev(label1, textarea1);
-    			set_input_value(textarea1, /*todo*/ ctx[17].noteContent);
+    			set_input_value(textarea1, /*editingTodo*/ ctx[3].noteContent);
     			append_dev(form, t3);
     			append_dev(form, button0);
     			append_dev(form, t5);
@@ -594,10 +640,10 @@ var app = (function () {
 
     			if (!mounted) {
     				dispose = [
-    					listen_dev(textarea0, "input", textarea0_input_handler),
-    					listen_dev(textarea1, "input", textarea1_input_handler),
-    					listen_dev(button0, "click", click_handler, false, false, false, false),
-    					listen_dev(button1, "click", /*cancelEditing*/ ctx[8], false, false, false, false)
+    					listen_dev(textarea0, "input", /*textarea0_input_handler*/ ctx[12]),
+    					listen_dev(textarea1, "input", /*textarea1_input_handler*/ ctx[13]),
+    					listen_dev(button1, "click", /*cancelEditing*/ ctx[9], false, false, false, false),
+    					listen_dev(form, "submit", prevent_default(submit_handler), false, true, false, false)
     				];
 
     				mounted = true;
@@ -606,12 +652,12 @@ var app = (function () {
     		p: function update(new_ctx, dirty) {
     			ctx = new_ctx;
 
-    			if (dirty & /*todos*/ 1) {
-    				set_input_value(textarea0, /*todo*/ ctx[17].title);
+    			if (dirty & /*editingTodo*/ 8) {
+    				set_input_value(textarea0, /*editingTodo*/ ctx[3].title);
     			}
 
-    			if (dirty & /*todos*/ 1) {
-    				set_input_value(textarea1, /*todo*/ ctx[17].noteContent);
+    			if (dirty & /*editingTodo*/ 8) {
+    				set_input_value(textarea1, /*editingTodo*/ ctx[3].noteContent);
     			}
     		},
     		d: function destroy(detaching) {
@@ -625,20 +671,20 @@ var app = (function () {
     		block,
     		id: create_if_block.name,
     		type: "if",
-    		source: "(126:8) {#if editing}",
+    		source: "(172:8) {#if editingTodo && editingTodo.id === todo.id}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (124:4) {#each todos as todo}
+    // (170:4) {#each todos as todo}
     function create_each_block(ctx) {
     	let li;
     	let t;
 
     	function select_block_type(ctx, dirty) {
-    		if (/*editing*/ ctx[3]) return create_if_block;
+    		if (/*editingTodo*/ ctx[3] && /*editingTodo*/ ctx[3].id === /*todo*/ ctx[20].id) return create_if_block;
     		return create_else_block;
     	}
 
@@ -650,7 +696,7 @@ var app = (function () {
     			li = element("li");
     			if_block.c();
     			t = space();
-    			add_location(li, file, 124, 6, 3082);
+    			add_location(li, file, 170, 6, 4156);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, li, anchor);
@@ -680,7 +726,7 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(124:4) {#each todos as todo}",
+    		source: "(170:4) {#each todos as todo}",
     		ctx
     	});
 
@@ -688,6 +734,7 @@ var app = (function () {
     }
 
     function create_fragment(ctx) {
+    	let main;
     	let h1;
     	let t1;
     	let form;
@@ -714,16 +761,17 @@ var app = (function () {
 
     	const block = {
     		c: function create() {
+    			main = element("main");
     			h1 = element("h1");
     			h1.textContent = "Lista de Tarefas";
     			t1 = space();
     			form = element("form");
     			label0 = element("label");
-    			t2 = text("Título:\r\n\t  \r\n\t  ");
+    			t2 = text("Título:\r\n      ");
     			input = element("input");
     			t3 = space();
     			label1 = element("label");
-    			t4 = text("Conteúdo da Tarefa:\r\n\t  ");
+    			t4 = text("Conteúdo da Tarefa:\r\n      ");
     			textarea = element("textarea");
     			t5 = space();
     			button = element("button");
@@ -735,24 +783,26 @@ var app = (function () {
     				each_blocks[i].c();
     			}
 
-    			add_location(h1, file, 105, 2, 2562);
+    			add_location(h1, file, 153, 2, 3729);
     			attr_dev(input, "type", "text");
-    			add_location(input, file, 112, 3, 2770);
-    			add_location(label0, file, 109, 1, 2691);
-    			add_location(textarea, file, 116, 3, 2860);
-    			add_location(label1, file, 114, 1, 2824);
+    			add_location(input, file, 159, 6, 3889);
+    			add_location(label0, file, 157, 4, 3859);
+    			add_location(textarea, file, 163, 6, 3991);
+    			add_location(label1, file, 161, 4, 3949);
     			attr_dev(button, "type", "submit");
-    			add_location(button, file, 119, 1, 2983);
-    			add_location(form, file, 108, 2, 2642);
-    			add_location(ul, file, 122, 2, 3043);
+    			add_location(button, file, 165, 4, 4057);
+    			add_location(form, file, 156, 2, 3807);
+    			add_location(ul, file, 168, 2, 4117);
+    			add_location(main, file, 152, 0, 3719);
     		},
     		l: function claim(nodes) {
     			throw new Error_1("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
-    			insert_dev(target, h1, anchor);
-    			insert_dev(target, t1, anchor);
-    			insert_dev(target, form, anchor);
+    			insert_dev(target, main, anchor);
+    			append_dev(main, h1);
+    			append_dev(main, t1);
+    			append_dev(main, form);
     			append_dev(form, label0);
     			append_dev(label0, t2);
     			append_dev(label0, input);
@@ -764,8 +814,8 @@ var app = (function () {
     			set_input_value(textarea, /*noteContent*/ ctx[2]);
     			append_dev(form, t5);
     			append_dev(form, button);
-    			insert_dev(target, t7, anchor);
-    			insert_dev(target, ul, anchor);
+    			append_dev(main, t7);
+    			append_dev(main, ul);
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
     				if (each_blocks[i]) {
@@ -775,8 +825,8 @@ var app = (function () {
 
     			if (!mounted) {
     				dispose = [
-    					listen_dev(input, "input", /*input_input_handler*/ ctx[9]),
-    					listen_dev(textarea, "input", /*textarea_input_handler*/ ctx[10]),
+    					listen_dev(input, "input", /*input_input_handler*/ ctx[10]),
+    					listen_dev(textarea, "input", /*textarea_input_handler*/ ctx[11]),
     					listen_dev(form, "submit", prevent_default(/*handleSubmit*/ ctx[4]), false, true, false, false)
     				];
 
@@ -792,7 +842,7 @@ var app = (function () {
     				set_input_value(textarea, /*noteContent*/ ctx[2]);
     			}
 
-    			if (dirty & /*cancelEditing, updateNote, todos, editing, deleteTodo, startEditing*/ 489) {
+    			if (dirty & /*updateNote, todos, editingTodo, cancelEditing, deleteTodo, startEditing, toggleCompletion*/ 1001) {
     				each_value = /*todos*/ ctx[0];
     				validate_each_argument(each_value);
     				let i;
@@ -819,11 +869,7 @@ var app = (function () {
     		i: noop,
     		o: noop,
     		d: function destroy(detaching) {
-    			if (detaching) detach_dev(h1);
-    			if (detaching) detach_dev(t1);
-    			if (detaching) detach_dev(form);
-    			if (detaching) detach_dev(t7);
-    			if (detaching) detach_dev(ul);
+    			if (detaching) detach_dev(main);
     			destroy_each(each_blocks, detaching);
     			mounted = false;
     			run_all(dispose);
@@ -847,10 +893,10 @@ var app = (function () {
     	let todos = [];
     	let title = '';
     	let noteContent = '';
-    	let editing = false;
+    	let editingTodo = null;
 
     	async function handleSubmit() {
-    		const data = { title, noteContent };
+    		const data = { title, noteContent, completed: false };
 
     		try {
     			const response = await fetch('http://localhost:3003/todos', {
@@ -866,10 +912,16 @@ var app = (function () {
     			const createdTodo = await response.json();
     			console.log('Tarefa criada:', createdTodo);
     			$$invalidate(0, todos = [...todos, createdTodo]);
+    			resetForm();
     		} catch(error) {
     			console.error('Erro:', error.message);
     		} // Trate o erro de acordo com a sua necessidade
     	}
+
+    	const resetForm = () => {
+    		$$invalidate(1, title = '');
+    		$$invalidate(2, noteContent = '');
+    	};
 
     	const fetchTodos = async () => {
     		try {
@@ -927,13 +979,50 @@ var app = (function () {
 
     				return todo;
     			}));
+
+    			cancelEditing();
     		} catch(error) {
     			console.error('Erro:', error.message);
     		} // Trate o erro de acordo com a sua necessidade
     	};
 
-    	const startEditing = () => $$invalidate(3, editing = true);
-    	const cancelEditing = () => $$invalidate(3, editing = false);
+    	const toggleCompletion = async (id, completed) => {
+    		try {
+    			const data = { completed };
+
+    			const response = await fetch(`http://localhost:3003/todos/${id}`, {
+    				method: 'PATCH',
+    				headers: { 'Content-Type': 'application/json' },
+    				body: JSON.stringify(data)
+    			});
+
+    			if (!response.ok) {
+    				throw new Error('Erro ao atualizar o status da tarefa');
+    			}
+
+    			const updatedTodo = await response.json();
+    			console.log('Tarefa atualizada:', updatedTodo);
+
+    			$$invalidate(0, todos = todos.map(todo => {
+    				if (todo.id === updatedTodo.id) {
+    					return updatedTodo;
+    				}
+
+    				return todo;
+    			}));
+    		} catch(error) {
+    			console.error('Erro:', error.message);
+    		}
+    	};
+
+    	const startEditing = id => {
+    		$$invalidate(3, editingTodo = todos.find(todo => todo.id === id));
+    	};
+
+    	const cancelEditing = () => {
+    		$$invalidate(3, editingTodo = null);
+    	};
+
     	fetchTodos();
     	const writable_props = [];
 
@@ -951,29 +1040,32 @@ var app = (function () {
     		$$invalidate(2, noteContent);
     	}
 
-    	function textarea0_input_handler(each_value, todo_index) {
-    		each_value[todo_index].title = this.value;
-    		$$invalidate(0, todos);
+    	function textarea0_input_handler() {
+    		editingTodo.title = this.value;
+    		$$invalidate(3, editingTodo);
     	}
 
-    	function textarea1_input_handler(each_value, todo_index) {
-    		each_value[todo_index].noteContent = this.value;
-    		$$invalidate(0, todos);
+    	function textarea1_input_handler() {
+    		editingTodo.noteContent = this.value;
+    		$$invalidate(3, editingTodo);
     	}
 
-    	const click_handler = todo => updateNote(todo.id, todo.title, todo.noteContent);
-    	const click_handler_1 = todo => startEditing(todo.id);
-    	const click_handler_2 = todo => deleteTodo(todo.id);
+    	const submit_handler = todo => updateNote(todo.id, editingTodo.title, editingTodo.noteContent);
+    	const change_handler = todo => toggleCompletion(todo.id, !todo.completed);
+    	const click_handler = todo => startEditing(todo.id);
+    	const click_handler_1 = todo => deleteTodo(todo.id);
 
     	$$self.$capture_state = () => ({
     		todos,
     		title,
     		noteContent,
-    		editing,
+    		editingTodo,
     		handleSubmit,
+    		resetForm,
     		fetchTodos,
     		deleteTodo,
     		updateNote,
+    		toggleCompletion,
     		startEditing,
     		cancelEditing
     	});
@@ -982,7 +1074,7 @@ var app = (function () {
     		if ('todos' in $$props) $$invalidate(0, todos = $$props.todos);
     		if ('title' in $$props) $$invalidate(1, title = $$props.title);
     		if ('noteContent' in $$props) $$invalidate(2, noteContent = $$props.noteContent);
-    		if ('editing' in $$props) $$invalidate(3, editing = $$props.editing);
+    		if ('editingTodo' in $$props) $$invalidate(3, editingTodo = $$props.editingTodo);
     	};
 
     	if ($$props && "$$inject" in $$props) {
@@ -993,19 +1085,21 @@ var app = (function () {
     		todos,
     		title,
     		noteContent,
-    		editing,
+    		editingTodo,
     		handleSubmit,
     		deleteTodo,
     		updateNote,
+    		toggleCompletion,
     		startEditing,
     		cancelEditing,
     		input_input_handler,
     		textarea_input_handler,
     		textarea0_input_handler,
     		textarea1_input_handler,
+    		submit_handler,
+    		change_handler,
     		click_handler,
-    		click_handler_1,
-    		click_handler_2
+    		click_handler_1
     	];
     }
 
