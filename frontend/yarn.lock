@@ -522,6 +522,11 @@ svelte@^3.55.0:
   resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.59.2.tgz#a137b28e025a181292b2ae2e3dca90bf8ec73aec"
   integrity sha512-vzSyuGr3eEoAtT/A6bmajosJZIUWySzY2CzB3w2pgPvnkUjGqlDnsNnA0PMO+mMAhuyMul6C2uuZzY6ELSkzyA==
 
+tabler-icons-svelte@^1.10.0:
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/tabler-icons-svelte/-/tabler-icons-svelte-1.10.0.tgz#f15575204b8bec31bd1a7fe0e78d2ec252d4274a"
+  integrity sha512-BERFRwLW+nLnEXrC1yc3TCwM9LxlMqixnQiMIF/u9XESbYXUCi6udjwvSGmwLepAD0DI9OdXBrZvfPBan7Dzcg==
+
 terser@^5.17.4:
   version "5.18.2"
   resolved "https://registry.yarnpkg.com/terser/-/terser-5.18.2.tgz#ff3072a0faf21ffd38f99acc9a0ddf7b5f07b948"

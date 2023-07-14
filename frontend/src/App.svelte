@@ -123,14 +123,16 @@
       console.log('Tarefa atualizada:', updatedTodo);
       todos = todos.map(todo => {
         if (todo.id === updatedTodo.id) {
-          return updatedTodo;
+          return { ...todo, completed: updatedTodo.completed };
         }
         return todo;
-      });
+      })
     } catch (error) {
       console.error('Erro:', error.message);
     }
   };
+
+  
 
   const startEditing = (id) => {
     editingTodo = todos.find(todo => todo.id === id);
@@ -144,6 +146,111 @@
 </script>
 
 <style>
+  main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .todo_form {
+    width: 35%;
+    padding: 15px;
+    border-radius: 4px;
+    border: 1px solid #5f6368;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .btn {
+    border: none;
+    border-radius: 4px;
+	  background-color: #333;
+	  color: beige;
+    transition: 1s;
+  }
+
+  .container-btn {
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: flex-end;
+  }
+
+  /* #save {
+    width: 100%;
+  } */
+
+  .btn:hover {
+	  background-color: rgb(41, 37, 37);
+  }
+
+  input {
+    width: 100%;
+	  background-color: rgb(41, 37, 37);
+    border: none;
+    border-radius: 4px;
+	  color: beige;
+  }
+
+  /* textarea {
+	  background-color: rgb(41, 37, 37);
+  } */
+
+  .container-notes {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  ul {
+    width: 100%;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    gap: 5px;
+  }
+
+  li {
+    /* height: 20%; */
+    /* width: 100%; */
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #5f6368;
+    padding: 15px;
+    border-radius: 4px;
+    transition: 0.8s;
+  }
+
+  li:hover {
+    box-shadow: 0 0 5px #888888;
+  }
+
+  .edit {
+    margin: auto;
+  }
+
+  .checkBoxk {
+    border-radius: 4px;
+    padding: 5px;
+    display: flex;
+    gap: 5px;
+    margin: auto;
+    transition: 1s;
+  }
+
+  .checkBoxk:hover {
+	  background-color: rgb(41, 37, 37);
+  }
+
+  .box {
+    margin: auto 0;
+    cursor: pointer;
+  }
+
   .completed {
     text-decoration: line-through;
     color: gray;
@@ -151,48 +258,92 @@
 </style>
 
 <main>
-  <h1>Lista de Tarefas</h1>
+  <h1>Lista de Tarefas <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clipboard-check" width="40" height="40" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+    <path d="M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2"></path>
+    <path d="M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z"></path>
+    <path d="M9 14l2 2l4 -4"></path>
+ </svg> </h1>
+  <section class="todo_form">
+    <form on:submit|preventDefault={handleSubmit}>
+      <div>
+        <!-- <label for="title">
+          Título:
+        </label> -->
+        <input type="text" placeholder="Título" bind:value={title} />
+      </div>
+      <div>
+        <!-- <label for="noteContent">
+          Conteúdo da Tarefa:
+        </label> -->
+        <input bind:value={noteContent} placeholder="Crie uma nota.." />
+      </div>
+      <div class="container-btn">
+        <button class="btn" id="save" type="submit">Salvar</button>
+      </div>
+    </form>
+  </section>
 
-  <!-- Formulário para criação de tarefas -->
-  <form on:submit|preventDefault={handleSubmit}>
-    <label>
-      Título:
-      <input type="text" bind:value={title} />
-    </label>
-    <label>
-      Conteúdo da Tarefa:
-      <textarea bind:value={noteContent}></textarea>
-    </label>
-    <button type="submit">Criar Tarefa</button>
-  </form>
+  <section class="container-notes">
+    <h2>Tarefas Pendentes <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-check" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+      <path d="M5 12l5 5l10 -10"></path>
+   </svg></h2>
+    <ul>
+      {#each todos.filter(todo => !todo.completed) as todo}
+        <li>
+          {#if editingTodo && editingTodo.id === todo.id}
+            <form on:submit|preventDefault={() => updateNote(todo.id, editingTodo.title, editingTodo.noteContent)}>
+              <label>
+                <input bind:value={editingTodo.title} />
+              </label>
+              <label>
+                <input bind:value={editingTodo.noteContent} />
+              </label>
+              <div class="container-btn">
+                <!-- Campo de checkbox -->
+                <div class="checkBoxk">
+                  <input class="box" type="checkbox" checked={editingTodo.completed} on:change={() => toggleCompletion(todo.id, !editingTodo.completed)} />
+                  <label for="completed">Concluir</label>
+                </div>
+                <!-- Botões de atualizar e cancelar -->
+                <button class="btn edit" type="submit">Atualizar</button>
+                <button class="btn edit" type="button" on:click={cancelEditing}>Cancelar</button>
+              </div>
+            </form>
+          {:else}
+            <h3 class:completed={todo.completed}>{todo.title}</h3>
+            <p class:completed={todo.completed}>{todo.noteContent}</p>
+            <div class="container-btn">
+              <button class="btn" on:click={() => startEditing(todo.id)}>Editar</button>
+              <button class="btn" on:click={() => deleteTodo(todo.id)}>Excluir</button>
+            </div>
+          {/if}
+        </li>
+      {/each}
+    </ul>
+  </section>
 
-  <ul>
-    {#each todos as todo}
-      <li>
-        {#if editingTodo && editingTodo.id === todo.id}
-          <form on:submit|preventDefault={() => updateNote(todo.id, editingTodo.title, editingTodo.noteContent)}>
-            <label>
-              Título:
-              <textarea bind:value={editingTodo.title}></textarea>
-            </label>
-            <label>
-              Conteúdo da Tarefa:
-              <textarea bind:value={editingTodo.noteContent}></textarea>
-            </label>
-            <button type="submit">Atualizar</button>
-            <button type="button" on:click={cancelEditing}>Cancelar</button>
-          </form>
-        {:else}
-          <div>
-            <input type="checkbox" checked={todo.completed} on:change={() => toggleCompletion(todo.id, !todo.completed)} />
+  <section class="container-notes">
+    <h2>Tarefas Concluídas <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-checks" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+      <path d="M7 12l5 5l10 -10"></path>
+      <path d="M2 12l5 5m5 -5l5 -5"></path>
+   </svg></h2>
+    <ul>
+      {#each todos.filter(todo => todo.completed) as todo}
+        <li>
+          <div class="checkBoxk completed">
+            <input class="box" type="checkbox" checked={todo.completed} on:change={() => toggleCompletion(todo.id, !todo.completed)} />
             <label for="completed">Concluído</label>
           </div>
           <h3 class:completed={todo.completed}>{todo.title}</h3>
           <p class:completed={todo.completed}>{todo.noteContent}</p>
-          <button on:click={() => startEditing(todo.id)}>Editar</button>
-          <button on:click={() => deleteTodo(todo.id)}>Excluir</button>
-        {/if}
-      </li>
-    {/each}
-  </ul>
+          <div class="container-btn">
+            <button class="btn" on:click={() => deleteTodo(todo.id)}>Excluir</button>
+          </div>
+        </li>
+      {/each}
+    </ul>
+  </section>
 </main>

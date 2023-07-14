@@ -5,7 +5,8 @@ html, body {
 }
 
 body {
-	color: #333;
+	background-color: #333;
+	color: beige;
 	margin: 0;
 	padding: 8px;
 	box-sizing: border-box;
@@ -48,6 +49,7 @@ button {
 	color: #333;
 	background-color: #f4f4f4;
 	outline: none;
+	cursor: pointer;
 }
 
 button:disabled {
@@ -60,4 +62,8 @@ button:not(:disabled):active {
 
 button:focus {
 	border-color: #666;
+}
+
+ul {
+	list-style: none;
 }
