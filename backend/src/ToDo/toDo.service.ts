@@ -16,13 +16,18 @@ export class TodoService {
   }
 
   async create(title: string, noteContent: string, completed: boolean): Promise<Todo> {
-    const todo = new Todo()
-    todo.title = title
-    todo.noteContent = noteContent
-    todo.completed = completed
-    await this.todoRepository.save(todo)
-    return todo
+    if (title !== '' || noteContent !== '') {
+      const todo = new Todo()
+      todo.title = title
+      todo.noteContent = noteContent
+      todo.completed = completed
+      await this.todoRepository.save(todo)
+      return todo
+    } else {
+      throw new Error('O título e o conteúdo da nota devem ser fornecidos.')
+    }
   }
+  
 
   async update(id: string, title: string, noteContent: string, completed: boolean): Promise<Todo> {
     const options: FindOneOptions<Todo> = { where: { id } }
