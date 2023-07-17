@@ -16,14 +16,15 @@ export class TodoController {
   async create(
     @Body('title') title: string,
     @Body('noteContent') noteContent: string,
+    @Body('completed') completed: boolean,
   ): Promise<Todo> {
-    return this.todoService.create(title, noteContent);
+    return this.todoService.create(title, noteContent, completed);
   }
 
   @Patch(':id')
   async update(@Param('id') id: string, @Body() updateData: Partial<Todo>): Promise<Todo> {
-    const { title, noteContent } = updateData;
-    return this.todoService.update(id, title, noteContent);
+    const { title, noteContent, completed } = updateData;
+    return this.todoService.update(id, title, noteContent, completed);
   }
 
   @Delete(':id')

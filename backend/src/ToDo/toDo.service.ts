@@ -15,15 +15,16 @@ export class TodoService {
     return this.todoRepository.find()
   }
 
-  async create(title: string, noteContent: string): Promise<Todo> {
+  async create(title: string, noteContent: string, completed: boolean): Promise<Todo> {
     const todo = new Todo()
     todo.title = title
     todo.noteContent = noteContent
+    todo.completed = completed
     await this.todoRepository.save(todo)
     return todo
   }
 
-  async update(id: string, title: string, noteContent: string): Promise<Todo> {
+  async update(id: string, title: string, noteContent: string, completed: boolean): Promise<Todo> {
     const options: FindOneOptions<Todo> = { where: { id } }
     const todo = await this.todoRepository.findOne(options)
     if (!todo) {
@@ -31,6 +32,7 @@ export class TodoService {
     }
     todo.title = title
     todo.noteContent = noteContent
+    todo.completed = completed
     await this.todoRepository.save(todo)
     return todo
   }
