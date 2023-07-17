@@ -53,6 +53,9 @@ var app = (function () {
     function element(name) {
         return document.createElement(name);
     }
+    function svg_element(name) {
+        return document.createElementNS('http://www.w3.org/2000/svg', name);
+    }
     function text(data) {
         return document.createTextNode(data);
     }
@@ -432,97 +435,82 @@ var app = (function () {
 
     function get_each_context(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[20] = list[i];
+    	child_ctx[22] = list[i];
     	return child_ctx;
     }
 
-    // (185:8) {:else}
+    function get_each_context_1(ctx, list, i) {
+    	const child_ctx = ctx.slice();
+    	child_ctx[22] = list[i];
+    	return child_ctx;
+    }
+
+    // (314:10) {:else}
     function create_else_block(ctx) {
-    	let div;
-    	let input;
-    	let input_checked_value;
-    	let t0;
-    	let label;
-    	let t2;
     	let h3;
-    	let t3_value = /*todo*/ ctx[20].title + "";
-    	let t3;
-    	let t4;
+    	let t0_value = /*todo*/ ctx[22].title + "";
+    	let t0;
+    	let t1;
     	let p;
-    	let t5_value = /*todo*/ ctx[20].noteContent + "";
-    	let t5;
-    	let t6;
+    	let t2_value = /*todo*/ ctx[22].noteContent + "";
+    	let t2;
+    	let t3;
+    	let div;
     	let button0;
-    	let t8;
+    	let t5;
     	let button1;
     	let mounted;
     	let dispose;
 
-    	function change_handler() {
-    		return /*change_handler*/ ctx[15](/*todo*/ ctx[20]);
-    	}
-
     	function click_handler() {
-    		return /*click_handler*/ ctx[16](/*todo*/ ctx[20]);
+    		return /*click_handler*/ ctx[16](/*todo*/ ctx[22]);
     	}
 
     	function click_handler_1() {
-    		return /*click_handler_1*/ ctx[17](/*todo*/ ctx[20]);
+    		return /*click_handler_1*/ ctx[17](/*todo*/ ctx[22]);
     	}
 
     	const block = {
     		c: function create() {
-    			div = element("div");
-    			input = element("input");
-    			t0 = space();
-    			label = element("label");
-    			label.textContent = "Concluído";
-    			t2 = space();
     			h3 = element("h3");
-    			t3 = text(t3_value);
-    			t4 = space();
+    			t0 = text(t0_value);
+    			t1 = space();
     			p = element("p");
-    			t5 = text(t5_value);
-    			t6 = space();
+    			t2 = text(t2_value);
+    			t3 = space();
+    			div = element("div");
     			button0 = element("button");
     			button0.textContent = "Editar";
-    			t8 = space();
+    			t5 = space();
     			button1 = element("button");
     			button1.textContent = "Excluir";
-    			attr_dev(input, "type", "checkbox");
-    			input.checked = input_checked_value = /*todo*/ ctx[20].completed;
-    			add_location(input, file, 186, 12, 4817);
-    			attr_dev(label, "for", "completed");
-    			add_location(label, file, 187, 12, 4942);
-    			add_location(div, file, 185, 10, 4798);
-    			attr_dev(h3, "class", "svelte-1551dgk");
-    			toggle_class(h3, "completed", /*todo*/ ctx[20].completed);
-    			add_location(h3, file, 189, 10, 5012);
-    			attr_dev(p, "class", "svelte-1551dgk");
-    			toggle_class(p, "completed", /*todo*/ ctx[20].completed);
-    			add_location(p, file, 190, 10, 5078);
-    			add_location(button0, file, 191, 10, 5148);
-    			add_location(button1, file, 192, 10, 5222);
+    			attr_dev(h3, "class", "svelte-srw5r6");
+    			toggle_class(h3, "completed", /*todo*/ ctx[22].completed);
+    			add_location(h3, file, 314, 12, 8169);
+    			attr_dev(p, "class", "svelte-srw5r6");
+    			toggle_class(p, "completed", /*todo*/ ctx[22].completed);
+    			add_location(p, file, 315, 12, 8237);
+    			attr_dev(button0, "class", "btn svelte-srw5r6");
+    			add_location(button0, file, 317, 14, 8352);
+    			attr_dev(button1, "class", "btn svelte-srw5r6");
+    			add_location(button1, file, 318, 14, 8442);
+    			attr_dev(div, "class", "container-btn svelte-srw5r6");
+    			add_location(div, file, 316, 12, 8309);
     		},
     		m: function mount(target, anchor) {
-    			insert_dev(target, div, anchor);
-    			append_dev(div, input);
-    			append_dev(div, t0);
-    			append_dev(div, label);
-    			insert_dev(target, t2, anchor);
     			insert_dev(target, h3, anchor);
-    			append_dev(h3, t3);
-    			insert_dev(target, t4, anchor);
+    			append_dev(h3, t0);
+    			insert_dev(target, t1, anchor);
     			insert_dev(target, p, anchor);
-    			append_dev(p, t5);
-    			insert_dev(target, t6, anchor);
-    			insert_dev(target, button0, anchor);
-    			insert_dev(target, t8, anchor);
-    			insert_dev(target, button1, anchor);
+    			append_dev(p, t2);
+    			insert_dev(target, t3, anchor);
+    			insert_dev(target, div, anchor);
+    			append_dev(div, button0);
+    			append_dev(div, t5);
+    			append_dev(div, button1);
 
     			if (!mounted) {
     				dispose = [
-    					listen_dev(input, "change", change_handler, false, false, false, false),
     					listen_dev(button0, "click", click_handler, false, false, false, false),
     					listen_dev(button1, "click", click_handler_1, false, false, false, false)
     				];
@@ -532,33 +520,24 @@ var app = (function () {
     		},
     		p: function update(new_ctx, dirty) {
     			ctx = new_ctx;
-
-    			if (dirty & /*todos*/ 1 && input_checked_value !== (input_checked_value = /*todo*/ ctx[20].completed)) {
-    				prop_dev(input, "checked", input_checked_value);
-    			}
-
-    			if (dirty & /*todos*/ 1 && t3_value !== (t3_value = /*todo*/ ctx[20].title + "")) set_data_dev(t3, t3_value);
+    			if (dirty & /*todos*/ 1 && t0_value !== (t0_value = /*todo*/ ctx[22].title + "")) set_data_dev(t0, t0_value);
 
     			if (dirty & /*todos*/ 1) {
-    				toggle_class(h3, "completed", /*todo*/ ctx[20].completed);
+    				toggle_class(h3, "completed", /*todo*/ ctx[22].completed);
     			}
 
-    			if (dirty & /*todos*/ 1 && t5_value !== (t5_value = /*todo*/ ctx[20].noteContent + "")) set_data_dev(t5, t5_value);
+    			if (dirty & /*todos*/ 1 && t2_value !== (t2_value = /*todo*/ ctx[22].noteContent + "")) set_data_dev(t2, t2_value);
 
     			if (dirty & /*todos*/ 1) {
-    				toggle_class(p, "completed", /*todo*/ ctx[20].completed);
+    				toggle_class(p, "completed", /*todo*/ ctx[22].completed);
     			}
     		},
     		d: function destroy(detaching) {
-    			if (detaching) detach_dev(div);
-    			if (detaching) detach_dev(t2);
     			if (detaching) detach_dev(h3);
-    			if (detaching) detach_dev(t4);
+    			if (detaching) detach_dev(t1);
     			if (detaching) detach_dev(p);
-    			if (detaching) detach_dev(t6);
-    			if (detaching) detach_dev(button0);
-    			if (detaching) detach_dev(t8);
-    			if (detaching) detach_dev(button1);
+    			if (detaching) detach_dev(t3);
+    			if (detaching) detach_dev(div);
     			mounted = false;
     			run_all(dispose);
     		}
@@ -568,80 +547,114 @@ var app = (function () {
     		block,
     		id: create_else_block.name,
     		type: "else",
-    		source: "(185:8) {:else}",
+    		source: "(314:10) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (172:8) {#if editingTodo && editingTodo.id === todo.id}
+    // (295:10) {#if editingTodo && editingTodo.id === todo.id}
     function create_if_block(ctx) {
     	let form;
     	let label0;
+    	let input0;
     	let t0;
-    	let textarea0;
-    	let t1;
     	let label1;
+    	let input1;
+    	let t1;
+    	let div1;
+    	let div0;
+    	let input2;
+    	let input2_checked_value;
     	let t2;
-    	let textarea1;
-    	let t3;
+    	let label2;
+    	let t4;
     	let button0;
-    	let t5;
+    	let t6;
     	let button1;
     	let mounted;
     	let dispose;
 
+    	function change_handler() {
+    		return /*change_handler*/ ctx[14](/*todo*/ ctx[22]);
+    	}
+
     	function submit_handler() {
-    		return /*submit_handler*/ ctx[14](/*todo*/ ctx[20]);
+    		return /*submit_handler*/ ctx[15](/*todo*/ ctx[22]);
     	}
 
     	const block = {
     		c: function create() {
     			form = element("form");
     			label0 = element("label");
-    			t0 = text("Título:\r\n              ");
-    			textarea0 = element("textarea");
-    			t1 = space();
+    			input0 = element("input");
+    			t0 = space();
     			label1 = element("label");
-    			t2 = text("Conteúdo da Tarefa:\r\n              ");
-    			textarea1 = element("textarea");
-    			t3 = space();
+    			input1 = element("input");
+    			t1 = space();
+    			div1 = element("div");
+    			div0 = element("div");
+    			input2 = element("input");
+    			t2 = space();
+    			label2 = element("label");
+    			label2.textContent = "Concluir";
+    			t4 = space();
     			button0 = element("button");
     			button0.textContent = "Atualizar";
-    			t5 = space();
+    			t6 = space();
     			button1 = element("button");
     			button1.textContent = "Cancelar";
-    			add_location(textarea0, file, 175, 14, 4392);
-    			add_location(label0, file, 173, 12, 4346);
-    			add_location(textarea1, file, 179, 14, 4538);
-    			add_location(label1, file, 177, 12, 4480);
+    			attr_dev(input0, "class", "svelte-srw5r6");
+    			add_location(input0, file, 297, 16, 7319);
+    			add_location(label0, file, 296, 14, 7294);
+    			attr_dev(input1, "class", "svelte-srw5r6");
+    			add_location(input1, file, 300, 16, 7424);
+    			add_location(label1, file, 299, 14, 7399);
+    			attr_dev(input2, "class", "box svelte-srw5r6");
+    			attr_dev(input2, "type", "checkbox");
+    			input2.checked = input2_checked_value = /*editingTodo*/ ctx[3].completed;
+    			add_location(input2, file, 305, 18, 7642);
+    			attr_dev(label2, "for", "completed");
+    			add_location(label2, file, 306, 18, 7799);
+    			attr_dev(div0, "class", "checkBoxk svelte-srw5r6");
+    			add_location(div0, file, 304, 16, 7599);
+    			attr_dev(button0, "class", "btn edit svelte-srw5r6");
     			attr_dev(button0, "type", "submit");
-    			add_location(button0, file, 181, 12, 4632);
+    			add_location(button0, file, 309, 16, 7937);
+    			attr_dev(button1, "class", "btn edit svelte-srw5r6");
     			attr_dev(button1, "type", "button");
-    			add_location(button1, file, 182, 12, 4686);
-    			add_location(form, file, 172, 10, 4229);
+    			add_location(button1, file, 310, 16, 8012);
+    			attr_dev(div1, "class", "container-btn svelte-srw5r6");
+    			add_location(div1, file, 302, 14, 7510);
+    			attr_dev(form, "class", "svelte-srw5r6");
+    			add_location(form, file, 295, 12, 7175);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, form, anchor);
     			append_dev(form, label0);
-    			append_dev(label0, t0);
-    			append_dev(label0, textarea0);
-    			set_input_value(textarea0, /*editingTodo*/ ctx[3].title);
-    			append_dev(form, t1);
+    			append_dev(label0, input0);
+    			set_input_value(input0, /*editingTodo*/ ctx[3].title);
+    			append_dev(form, t0);
     			append_dev(form, label1);
-    			append_dev(label1, t2);
-    			append_dev(label1, textarea1);
-    			set_input_value(textarea1, /*editingTodo*/ ctx[3].noteContent);
-    			append_dev(form, t3);
-    			append_dev(form, button0);
-    			append_dev(form, t5);
-    			append_dev(form, button1);
+    			append_dev(label1, input1);
+    			set_input_value(input1, /*editingTodo*/ ctx[3].noteContent);
+    			append_dev(form, t1);
+    			append_dev(form, div1);
+    			append_dev(div1, div0);
+    			append_dev(div0, input2);
+    			append_dev(div0, t2);
+    			append_dev(div0, label2);
+    			append_dev(div1, t4);
+    			append_dev(div1, button0);
+    			append_dev(div1, t6);
+    			append_dev(div1, button1);
 
     			if (!mounted) {
     				dispose = [
-    					listen_dev(textarea0, "input", /*textarea0_input_handler*/ ctx[12]),
-    					listen_dev(textarea1, "input", /*textarea1_input_handler*/ ctx[13]),
+    					listen_dev(input0, "input", /*input0_input_handler_1*/ ctx[12]),
+    					listen_dev(input1, "input", /*input1_input_handler_1*/ ctx[13]),
+    					listen_dev(input2, "change", change_handler, false, false, false, false),
     					listen_dev(button1, "click", /*cancelEditing*/ ctx[9], false, false, false, false),
     					listen_dev(form, "submit", prevent_default(submit_handler), false, true, false, false)
     				];
@@ -652,12 +665,16 @@ var app = (function () {
     		p: function update(new_ctx, dirty) {
     			ctx = new_ctx;
 
-    			if (dirty & /*editingTodo*/ 8) {
-    				set_input_value(textarea0, /*editingTodo*/ ctx[3].title);
+    			if (dirty & /*editingTodo*/ 8 && input0.value !== /*editingTodo*/ ctx[3].title) {
+    				set_input_value(input0, /*editingTodo*/ ctx[3].title);
     			}
 
-    			if (dirty & /*editingTodo*/ 8) {
-    				set_input_value(textarea1, /*editingTodo*/ ctx[3].noteContent);
+    			if (dirty & /*editingTodo*/ 8 && input1.value !== /*editingTodo*/ ctx[3].noteContent) {
+    				set_input_value(input1, /*editingTodo*/ ctx[3].noteContent);
+    			}
+
+    			if (dirty & /*editingTodo*/ 8 && input2_checked_value !== (input2_checked_value = /*editingTodo*/ ctx[3].completed)) {
+    				prop_dev(input2, "checked", input2_checked_value);
     			}
     		},
     		d: function destroy(detaching) {
@@ -671,20 +688,20 @@ var app = (function () {
     		block,
     		id: create_if_block.name,
     		type: "if",
-    		source: "(172:8) {#if editingTodo && editingTodo.id === todo.id}",
+    		source: "(295:10) {#if editingTodo && editingTodo.id === todo.id}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (170:4) {#each todos as todo}
-    function create_each_block(ctx) {
+    // (293:6) {#each todos.filter(todo => !todo.completed) as todo}
+    function create_each_block_1(ctx) {
     	let li;
     	let t;
 
     	function select_block_type(ctx, dirty) {
-    		if (/*editingTodo*/ ctx[3] && /*editingTodo*/ ctx[3].id === /*todo*/ ctx[20].id) return create_if_block;
+    		if (/*editingTodo*/ ctx[3] && /*editingTodo*/ ctx[3].id === /*todo*/ ctx[22].id) return create_if_block;
     		return create_else_block;
     	}
 
@@ -696,7 +713,8 @@ var app = (function () {
     			li = element("li");
     			if_block.c();
     			t = space();
-    			add_location(li, file, 170, 6, 4156);
+    			attr_dev(li, "class", "svelte-srw5r6");
+    			add_location(li, file, 293, 8, 7098);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, li, anchor);
@@ -724,9 +742,143 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
+    		id: create_each_block_1.name,
+    		type: "each",
+    		source: "(293:6) {#each todos.filter(todo => !todo.completed) as todo}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (334:6) {#each todos.filter(todo => todo.completed) as todo}
+    function create_each_block(ctx) {
+    	let li;
+    	let div0;
+    	let input;
+    	let input_checked_value;
+    	let t0;
+    	let label;
+    	let t2;
+    	let h3;
+    	let t3_value = /*todo*/ ctx[22].title + "";
+    	let t3;
+    	let t4;
+    	let p;
+    	let t5_value = /*todo*/ ctx[22].noteContent + "";
+    	let t5;
+    	let t6;
+    	let div1;
+    	let button;
+    	let t8;
+    	let mounted;
+    	let dispose;
+
+    	function change_handler_1() {
+    		return /*change_handler_1*/ ctx[18](/*todo*/ ctx[22]);
+    	}
+
+    	function click_handler_2() {
+    		return /*click_handler_2*/ ctx[19](/*todo*/ ctx[22]);
+    	}
+
+    	const block = {
+    		c: function create() {
+    			li = element("li");
+    			div0 = element("div");
+    			input = element("input");
+    			t0 = space();
+    			label = element("label");
+    			label.textContent = "Concluído";
+    			t2 = space();
+    			h3 = element("h3");
+    			t3 = text(t3_value);
+    			t4 = space();
+    			p = element("p");
+    			t5 = text(t5_value);
+    			t6 = space();
+    			div1 = element("div");
+    			button = element("button");
+    			button.textContent = "Excluir";
+    			t8 = space();
+    			attr_dev(input, "class", "box svelte-srw5r6");
+    			attr_dev(input, "type", "checkbox");
+    			input.checked = input_checked_value = /*todo*/ ctx[22].completed;
+    			add_location(input, file, 336, 12, 9211);
+    			attr_dev(label, "for", "completed");
+    			add_location(label, file, 337, 12, 9348);
+    			attr_dev(div0, "class", "checkBoxk completed svelte-srw5r6");
+    			add_location(div0, file, 335, 10, 9164);
+    			attr_dev(h3, "class", "svelte-srw5r6");
+    			toggle_class(h3, "completed", /*todo*/ ctx[22].completed);
+    			add_location(h3, file, 339, 10, 9418);
+    			attr_dev(p, "class", "svelte-srw5r6");
+    			toggle_class(p, "completed", /*todo*/ ctx[22].completed);
+    			add_location(p, file, 340, 10, 9484);
+    			attr_dev(button, "class", "btn svelte-srw5r6");
+    			add_location(button, file, 342, 12, 9595);
+    			attr_dev(div1, "class", "container-btn svelte-srw5r6");
+    			add_location(div1, file, 341, 10, 9554);
+    			attr_dev(li, "class", "svelte-srw5r6");
+    			add_location(li, file, 334, 8, 9148);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, li, anchor);
+    			append_dev(li, div0);
+    			append_dev(div0, input);
+    			append_dev(div0, t0);
+    			append_dev(div0, label);
+    			append_dev(li, t2);
+    			append_dev(li, h3);
+    			append_dev(h3, t3);
+    			append_dev(li, t4);
+    			append_dev(li, p);
+    			append_dev(p, t5);
+    			append_dev(li, t6);
+    			append_dev(li, div1);
+    			append_dev(div1, button);
+    			append_dev(li, t8);
+
+    			if (!mounted) {
+    				dispose = [
+    					listen_dev(input, "change", change_handler_1, false, false, false, false),
+    					listen_dev(button, "click", click_handler_2, false, false, false, false)
+    				];
+
+    				mounted = true;
+    			}
+    		},
+    		p: function update(new_ctx, dirty) {
+    			ctx = new_ctx;
+
+    			if (dirty & /*todos*/ 1 && input_checked_value !== (input_checked_value = /*todo*/ ctx[22].completed)) {
+    				prop_dev(input, "checked", input_checked_value);
+    			}
+
+    			if (dirty & /*todos*/ 1 && t3_value !== (t3_value = /*todo*/ ctx[22].title + "")) set_data_dev(t3, t3_value);
+
+    			if (dirty & /*todos*/ 1) {
+    				toggle_class(h3, "completed", /*todo*/ ctx[22].completed);
+    			}
+
+    			if (dirty & /*todos*/ 1 && t5_value !== (t5_value = /*todo*/ ctx[22].noteContent + "")) set_data_dev(t5, t5_value);
+
+    			if (dirty & /*todos*/ 1) {
+    				toggle_class(p, "completed", /*todo*/ ctx[22].completed);
+    			}
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(li);
+    			mounted = false;
+    			run_all(dispose);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(170:4) {#each todos as todo}",
+    		source: "(334:6) {#each todos.filter(todo => todo.completed) as todo}",
     		ctx
     	});
 
@@ -736,22 +888,53 @@ var app = (function () {
     function create_fragment(ctx) {
     	let main;
     	let h1;
+    	let t0;
+    	let svg0;
+    	let path0;
+    	let path1;
+    	let path2;
+    	let path3;
     	let t1;
+    	let section0;
     	let form;
-    	let label0;
+    	let div0;
+    	let input0;
     	let t2;
-    	let input;
+    	let div1;
+    	let input1;
     	let t3;
-    	let label1;
-    	let t4;
-    	let textarea;
-    	let t5;
+    	let div2;
     	let button;
+    	let t5;
+    	let section1;
+    	let h20;
+    	let t6;
+    	let svg1;
+    	let path4;
+    	let path5;
     	let t7;
-    	let ul;
+    	let ul0;
+    	let t8;
+    	let section2;
+    	let h21;
+    	let t9;
+    	let svg2;
+    	let path6;
+    	let path7;
+    	let path8;
+    	let t10;
+    	let ul1;
     	let mounted;
     	let dispose;
-    	let each_value = /*todos*/ ctx[0];
+    	let each_value_1 = /*todos*/ ctx[0].filter(func);
+    	validate_each_argument(each_value_1);
+    	let each_blocks_1 = [];
+
+    	for (let i = 0; i < each_value_1.length; i += 1) {
+    		each_blocks_1[i] = create_each_block_1(get_each_context_1(ctx, each_value_1, i));
+    	}
+
+    	let each_value = /*todos*/ ctx[0].filter(func_1);
     	validate_each_argument(each_value);
     	let each_blocks = [];
 
@@ -763,37 +946,142 @@ var app = (function () {
     		c: function create() {
     			main = element("main");
     			h1 = element("h1");
-    			h1.textContent = "Lista de Tarefas";
+    			t0 = text("Lista de Tarefas ");
+    			svg0 = svg_element("svg");
+    			path0 = svg_element("path");
+    			path1 = svg_element("path");
+    			path2 = svg_element("path");
+    			path3 = svg_element("path");
     			t1 = space();
+    			section0 = element("section");
     			form = element("form");
-    			label0 = element("label");
-    			t2 = text("Título:\r\n      ");
-    			input = element("input");
+    			div0 = element("div");
+    			input0 = element("input");
+    			t2 = space();
+    			div1 = element("div");
+    			input1 = element("input");
     			t3 = space();
-    			label1 = element("label");
-    			t4 = text("Conteúdo da Tarefa:\r\n      ");
-    			textarea = element("textarea");
-    			t5 = space();
+    			div2 = element("div");
     			button = element("button");
-    			button.textContent = "Criar Tarefa";
+    			button.textContent = "Salvar";
+    			t5 = space();
+    			section1 = element("section");
+    			h20 = element("h2");
+    			t6 = text("Tarefas Pendentes ");
+    			svg1 = svg_element("svg");
+    			path4 = svg_element("path");
+    			path5 = svg_element("path");
     			t7 = space();
-    			ul = element("ul");
+    			ul0 = element("ul");
+
+    			for (let i = 0; i < each_blocks_1.length; i += 1) {
+    				each_blocks_1[i].c();
+    			}
+
+    			t8 = space();
+    			section2 = element("section");
+    			h21 = element("h2");
+    			t9 = text("Tarefas Concluídas ");
+    			svg2 = svg_element("svg");
+    			path6 = svg_element("path");
+    			path7 = svg_element("path");
+    			path8 = svg_element("path");
+    			t10 = space();
+    			ul1 = element("ul");
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
     				each_blocks[i].c();
     			}
 
-    			add_location(h1, file, 153, 2, 3729);
-    			attr_dev(input, "type", "text");
-    			add_location(input, file, 159, 6, 3889);
-    			add_location(label0, file, 157, 4, 3859);
-    			add_location(textarea, file, 163, 6, 3991);
-    			add_location(label1, file, 161, 4, 3949);
+    			attr_dev(path0, "stroke", "none");
+    			attr_dev(path0, "d", "M0 0h24v24H0z");
+    			attr_dev(path0, "fill", "none");
+    			add_location(path0, file, 261, 4, 5694);
+    			attr_dev(path1, "d", "M9 5h-2a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-12a2 2 0 0 0 -2 -2h-2");
+    			add_location(path1, file, 262, 4, 5757);
+    			attr_dev(path2, "d", "M9 3m0 2a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v0a2 2 0 0 1 -2 2h-2a2 2 0 0 1 -2 -2z");
+    			add_location(path2, file, 263, 4, 5861);
+    			attr_dev(path3, "d", "M9 14l2 2l4 -4");
+    			add_location(path3, file, 264, 4, 5961);
+    			attr_dev(svg0, "xmlns", "http://www.w3.org/2000/svg");
+    			attr_dev(svg0, "class", "icon icon-tabler icon-tabler-clipboard-check");
+    			attr_dev(svg0, "width", "40");
+    			attr_dev(svg0, "height", "40");
+    			attr_dev(svg0, "viewBox", "0 0 24 24");
+    			attr_dev(svg0, "stroke-width", "2");
+    			attr_dev(svg0, "stroke", "currentColor");
+    			attr_dev(svg0, "fill", "none");
+    			attr_dev(svg0, "stroke-linecap", "round");
+    			attr_dev(svg0, "stroke-linejoin", "round");
+    			add_location(svg0, file, 260, 23, 5454);
+    			add_location(h1, file, 260, 2, 5433);
+    			attr_dev(input0, "type", "text");
+    			attr_dev(input0, "placeholder", "Título");
+    			attr_dev(input0, "class", "svelte-srw5r6");
+    			add_location(input0, file, 272, 8, 6189);
+    			add_location(div0, file, 268, 6, 6099);
+    			attr_dev(input1, "placeholder", "Crie uma nota..");
+    			attr_dev(input1, "class", "svelte-srw5r6");
+    			add_location(input1, file, 278, 8, 6380);
+    			add_location(div1, file, 274, 6, 6272);
+    			attr_dev(button, "class", "btn svelte-srw5r6");
+    			attr_dev(button, "id", "save");
     			attr_dev(button, "type", "submit");
-    			add_location(button, file, 165, 4, 4057);
-    			add_location(form, file, 156, 2, 3807);
-    			add_location(ul, file, 168, 2, 4117);
-    			add_location(main, file, 152, 0, 3719);
+    			add_location(button, file, 281, 8, 6503);
+    			attr_dev(div2, "class", "container-btn svelte-srw5r6");
+    			add_location(div2, file, 280, 6, 6466);
+    			attr_dev(form, "class", "svelte-srw5r6");
+    			add_location(form, file, 267, 4, 6045);
+    			attr_dev(section0, "class", "todo_form svelte-srw5r6");
+    			add_location(section0, file, 266, 2, 6012);
+    			attr_dev(path4, "stroke", "none");
+    			attr_dev(path4, "d", "M0 0h24v24H0z");
+    			attr_dev(path4, "fill", "none");
+    			add_location(path4, file, 288, 6, 6902);
+    			attr_dev(path5, "d", "M5 12l5 5l10 -10");
+    			add_location(path5, file, 289, 6, 6967);
+    			attr_dev(svg1, "xmlns", "http://www.w3.org/2000/svg");
+    			attr_dev(svg1, "class", "icon icon-tabler icon-tabler-check");
+    			attr_dev(svg1, "width", "24");
+    			attr_dev(svg1, "height", "24");
+    			attr_dev(svg1, "viewBox", "0 0 24 24");
+    			attr_dev(svg1, "stroke-width", "2");
+    			attr_dev(svg1, "stroke", "currentColor");
+    			attr_dev(svg1, "fill", "none");
+    			attr_dev(svg1, "stroke-linecap", "round");
+    			attr_dev(svg1, "stroke-linejoin", "round");
+    			add_location(svg1, file, 287, 26, 6670);
+    			add_location(h20, file, 287, 4, 6648);
+    			attr_dev(ul0, "class", "svelte-srw5r6");
+    			add_location(ul0, file, 291, 4, 7023);
+    			attr_dev(section1, "class", "container-notes svelte-srw5r6");
+    			add_location(section1, file, 286, 2, 6609);
+    			attr_dev(path6, "stroke", "none");
+    			attr_dev(path6, "d", "M0 0h24v24H0z");
+    			attr_dev(path6, "fill", "none");
+    			add_location(path6, file, 328, 6, 8908);
+    			attr_dev(path7, "d", "M7 12l5 5l10 -10");
+    			add_location(path7, file, 329, 6, 8973);
+    			attr_dev(path8, "d", "M2 12l5 5m5 -5l5 -5");
+    			add_location(path8, file, 330, 6, 9015);
+    			attr_dev(svg2, "xmlns", "http://www.w3.org/2000/svg");
+    			attr_dev(svg2, "class", "icon icon-tabler icon-tabler-checks");
+    			attr_dev(svg2, "width", "24");
+    			attr_dev(svg2, "height", "24");
+    			attr_dev(svg2, "viewBox", "0 0 24 24");
+    			attr_dev(svg2, "stroke-width", "2");
+    			attr_dev(svg2, "stroke", "currentColor");
+    			attr_dev(svg2, "fill", "none");
+    			attr_dev(svg2, "stroke-linecap", "round");
+    			attr_dev(svg2, "stroke-linejoin", "round");
+    			add_location(svg2, file, 327, 27, 8675);
+    			add_location(h21, file, 327, 4, 8652);
+    			attr_dev(ul1, "class", "svelte-srw5r6");
+    			add_location(ul1, file, 332, 4, 9074);
+    			attr_dev(section2, "class", "container-notes svelte-srw5r6");
+    			add_location(section2, file, 326, 2, 8613);
+    			attr_dev(main, "class", "svelte-srw5r6");
+    			add_location(main, file, 259, 0, 5423);
     		},
     		l: function claim(nodes) {
     			throw new Error_1("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -801,32 +1089,62 @@ var app = (function () {
     		m: function mount(target, anchor) {
     			insert_dev(target, main, anchor);
     			append_dev(main, h1);
+    			append_dev(h1, t0);
+    			append_dev(h1, svg0);
+    			append_dev(svg0, path0);
+    			append_dev(svg0, path1);
+    			append_dev(svg0, path2);
+    			append_dev(svg0, path3);
     			append_dev(main, t1);
-    			append_dev(main, form);
-    			append_dev(form, label0);
-    			append_dev(label0, t2);
-    			append_dev(label0, input);
-    			set_input_value(input, /*title*/ ctx[1]);
+    			append_dev(main, section0);
+    			append_dev(section0, form);
+    			append_dev(form, div0);
+    			append_dev(div0, input0);
+    			set_input_value(input0, /*title*/ ctx[1]);
+    			append_dev(form, t2);
+    			append_dev(form, div1);
+    			append_dev(div1, input1);
+    			set_input_value(input1, /*noteContent*/ ctx[2]);
     			append_dev(form, t3);
-    			append_dev(form, label1);
-    			append_dev(label1, t4);
-    			append_dev(label1, textarea);
-    			set_input_value(textarea, /*noteContent*/ ctx[2]);
-    			append_dev(form, t5);
-    			append_dev(form, button);
-    			append_dev(main, t7);
-    			append_dev(main, ul);
+    			append_dev(form, div2);
+    			append_dev(div2, button);
+    			append_dev(main, t5);
+    			append_dev(main, section1);
+    			append_dev(section1, h20);
+    			append_dev(h20, t6);
+    			append_dev(h20, svg1);
+    			append_dev(svg1, path4);
+    			append_dev(svg1, path5);
+    			append_dev(section1, t7);
+    			append_dev(section1, ul0);
+
+    			for (let i = 0; i < each_blocks_1.length; i += 1) {
+    				if (each_blocks_1[i]) {
+    					each_blocks_1[i].m(ul0, null);
+    				}
+    			}
+
+    			append_dev(main, t8);
+    			append_dev(main, section2);
+    			append_dev(section2, h21);
+    			append_dev(h21, t9);
+    			append_dev(h21, svg2);
+    			append_dev(svg2, path6);
+    			append_dev(svg2, path7);
+    			append_dev(svg2, path8);
+    			append_dev(section2, t10);
+    			append_dev(section2, ul1);
 
     			for (let i = 0; i < each_blocks.length; i += 1) {
     				if (each_blocks[i]) {
-    					each_blocks[i].m(ul, null);
+    					each_blocks[i].m(ul1, null);
     				}
     			}
 
     			if (!mounted) {
     				dispose = [
-    					listen_dev(input, "input", /*input_input_handler*/ ctx[10]),
-    					listen_dev(textarea, "input", /*textarea_input_handler*/ ctx[11]),
+    					listen_dev(input0, "input", /*input0_input_handler*/ ctx[10]),
+    					listen_dev(input1, "input", /*input1_input_handler*/ ctx[11]),
     					listen_dev(form, "submit", prevent_default(/*handleSubmit*/ ctx[4]), false, true, false, false)
     				];
 
@@ -834,16 +1152,40 @@ var app = (function () {
     			}
     		},
     		p: function update(ctx, [dirty]) {
-    			if (dirty & /*title*/ 2 && input.value !== /*title*/ ctx[1]) {
-    				set_input_value(input, /*title*/ ctx[1]);
+    			if (dirty & /*title*/ 2 && input0.value !== /*title*/ ctx[1]) {
+    				set_input_value(input0, /*title*/ ctx[1]);
     			}
 
-    			if (dirty & /*noteContent*/ 4) {
-    				set_input_value(textarea, /*noteContent*/ ctx[2]);
+    			if (dirty & /*noteContent*/ 4 && input1.value !== /*noteContent*/ ctx[2]) {
+    				set_input_value(input1, /*noteContent*/ ctx[2]);
     			}
 
-    			if (dirty & /*updateNote, todos, editingTodo, cancelEditing, deleteTodo, startEditing, toggleCompletion*/ 1001) {
-    				each_value = /*todos*/ ctx[0];
+    			if (dirty & /*updateNote, todos, editingTodo, cancelEditing, toggleCompletion, deleteTodo, startEditing*/ 1001) {
+    				each_value_1 = /*todos*/ ctx[0].filter(func);
+    				validate_each_argument(each_value_1);
+    				let i;
+
+    				for (i = 0; i < each_value_1.length; i += 1) {
+    					const child_ctx = get_each_context_1(ctx, each_value_1, i);
+
+    					if (each_blocks_1[i]) {
+    						each_blocks_1[i].p(child_ctx, dirty);
+    					} else {
+    						each_blocks_1[i] = create_each_block_1(child_ctx);
+    						each_blocks_1[i].c();
+    						each_blocks_1[i].m(ul0, null);
+    					}
+    				}
+
+    				for (; i < each_blocks_1.length; i += 1) {
+    					each_blocks_1[i].d(1);
+    				}
+
+    				each_blocks_1.length = each_value_1.length;
+    			}
+
+    			if (dirty & /*deleteTodo, todos, toggleCompletion*/ 161) {
+    				each_value = /*todos*/ ctx[0].filter(func_1);
     				validate_each_argument(each_value);
     				let i;
 
@@ -855,7 +1197,7 @@ var app = (function () {
     					} else {
     						each_blocks[i] = create_each_block(child_ctx);
     						each_blocks[i].c();
-    						each_blocks[i].m(ul, null);
+    						each_blocks[i].m(ul1, null);
     					}
     				}
 
@@ -870,6 +1212,7 @@ var app = (function () {
     		o: noop,
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(main);
+    			destroy_each(each_blocks_1, detaching);
     			destroy_each(each_blocks, detaching);
     			mounted = false;
     			run_all(dispose);
@@ -886,6 +1229,9 @@ var app = (function () {
 
     	return block;
     }
+
+    const func = todo => !todo.completed;
+    const func_1 = todo => todo.completed;
 
     function instance($$self, $$props, $$invalidate) {
     	let { $$slots: slots = {}, $$scope } = $$props;
@@ -1005,7 +1351,10 @@ var app = (function () {
 
     			$$invalidate(0, todos = todos.map(todo => {
     				if (todo.id === updatedTodo.id) {
-    					return updatedTodo;
+    					return {
+    						...todo,
+    						completed: updatedTodo.completed
+    					};
     				}
 
     				return todo;
@@ -1030,30 +1379,32 @@ var app = (function () {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console_1.warn(`<App> was created with unknown prop '${key}'`);
     	});
 
-    	function input_input_handler() {
+    	function input0_input_handler() {
     		title = this.value;
     		$$invalidate(1, title);
     	}
 
-    	function textarea_input_handler() {
+    	function input1_input_handler() {
     		noteContent = this.value;
     		$$invalidate(2, noteContent);
     	}
 
-    	function textarea0_input_handler() {
+    	function input0_input_handler_1() {
     		editingTodo.title = this.value;
     		$$invalidate(3, editingTodo);
     	}
 
-    	function textarea1_input_handler() {
+    	function input1_input_handler_1() {
     		editingTodo.noteContent = this.value;
     		$$invalidate(3, editingTodo);
     	}
 
+    	const change_handler = todo => toggleCompletion(todo.id, !editingTodo.completed);
     	const submit_handler = todo => updateNote(todo.id, editingTodo.title, editingTodo.noteContent);
-    	const change_handler = todo => toggleCompletion(todo.id, !todo.completed);
     	const click_handler = todo => startEditing(todo.id);
     	const click_handler_1 = todo => deleteTodo(todo.id);
+    	const change_handler_1 = todo => toggleCompletion(todo.id, !todo.completed);
+    	const click_handler_2 = todo => deleteTodo(todo.id);
 
     	$$self.$capture_state = () => ({
     		todos,
@@ -1092,14 +1443,16 @@ var app = (function () {
     		toggleCompletion,
     		startEditing,
     		cancelEditing,
-    		input_input_handler,
-    		textarea_input_handler,
-    		textarea0_input_handler,
-    		textarea1_input_handler,
-    		submit_handler,
+    		input0_input_handler,
+    		input1_input_handler,
+    		input0_input_handler_1,
+    		input1_input_handler_1,
     		change_handler,
+    		submit_handler,
     		click_handler,
-    		click_handler_1
+    		click_handler_1,
+    		change_handler_1,
+    		click_handler_2
     	];
     }
 
