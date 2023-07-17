@@ -30,7 +30,6 @@
       resetForm();
     } catch (error) {
       console.error('Erro:', error.message);
-      // Trate o erro de acordo com a sua necessidade
     }
   }
 
@@ -65,7 +64,6 @@
       console.log('Tarefa excluída:', id);
     } catch (error) {
       console.error('Erro:', error.message);
-      // Trate o erro de acordo com a sua necessidade
     }
   };
 
@@ -99,7 +97,6 @@
       cancelEditing();
     } catch (error) {
       console.error('Erro:', error.message);
-      // Trate o erro de acordo com a sua necessidade
     }
   };
 
@@ -174,13 +171,10 @@
 
   .container-btn {
     display: flex;
-    /* flex-direction: column; */
     justify-content: flex-end;
+    flex-wrap: wrap;
   }
 
-  /* #save {
-    width: 100%;
-  } */
 
   .btn:hover {
 	  background-color: rgb(41, 37, 37);
@@ -194,10 +188,6 @@
 	  color: beige;
   }
 
-  /* textarea {
-	  background-color: rgb(41, 37, 37);
-  } */
-
   .container-notes {
     width: 50%;
     display: flex;
@@ -210,13 +200,10 @@
     padding: 0;
     display: flex;
     flex-direction: column;
-    /* align-items: center; */
     gap: 5px;
   }
 
   li {
-    /* height: 20%; */
-    /* width: 100%; */
     display: flex;
     flex-direction: column;
     border: 1px solid #5f6368;
@@ -255,6 +242,7 @@
     text-decoration: line-through;
     color: gray;
   }
+  
 </style>
 
 <main>
@@ -267,15 +255,9 @@
   <section class="todo_form">
     <form on:submit|preventDefault={handleSubmit}>
       <div>
-        <!-- <label for="title">
-          Título:
-        </label> -->
         <input type="text" placeholder="Título" bind:value={title} />
       </div>
       <div>
-        <!-- <label for="noteContent">
-          Conteúdo da Tarefa:
-        </label> -->
         <input bind:value={noteContent} placeholder="Crie uma nota.." />
       </div>
       <div class="container-btn">
@@ -301,12 +283,10 @@
                 <input bind:value={editingTodo.noteContent} />
               </label>
               <div class="container-btn">
-                <!-- Campo de checkbox -->
                 <div class="checkBoxk">
                   <input class="box" type="checkbox" checked={editingTodo.completed} on:change={() => toggleCompletion(todo.id, !editingTodo.completed)} />
                   <label for="completed">Concluir</label>
                 </div>
-                <!-- Botões de atualizar e cancelar -->
                 <button class="btn edit" type="submit">Atualizar</button>
                 <button class="btn edit" type="button" on:click={cancelEditing}>Cancelar</button>
               </div>
